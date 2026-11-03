@@ -12,4 +12,35 @@ Tray chỉ sử dụng IPC và hợp đồng dùng chung, không import mã th�
 
 C1: Dashboard; C2: Tray; C3: Child View; C4: giao diện yêu cầu. C5 (dữ liệu phân loại) đặt tại `data/classification/`; C6 (QA tích hợp) đặt tại `tests/`.
 
-Hiện đây là khung thư mục phục vụ triển khai. Yêu cầu giao diện và minh bạch nằm trong [SRS](../../docs/architecture/SYSTEM_ARCHITECTURE_SRS.md).
+## Chạy Tray trên Windows
+
+Yêu cầu Python 3.11+ có tkinter (bản cài Python Windows thông thường có sẵn).
+Chạy bằng tài khoản User tương tác, không dùng Run as administrator hoặc SYSTEM:
+
+```powershell
+python -m pip install -e './packages/interfaces[tray]'
+ogk-tray
+# Hoặc: python -m ogk_ui.tray.main
+```
+
+Phụ thuộc Tray được khai báo riêng trong extra `tray`; cài package web không
+import pystray/pywin32. Entry point GUI không tự nâng quyền. Bộ cài cần dùng
+manifest `asInvoker` và đăng ký khởi động trong phiên User theo SRS.
+
+- `tray/main.py`: icon, menu “Thời gian còn lại”/“Xin thêm giờ”, điều phối Tk.
+- `tray/ipc_client.py`: kết nối Named Pipe bất đồng bộ, backoff và giới hạn queue.
+- `tray/dialogs.py`: hộp thoại công khai, giải thích luật và yêu cầu thêm giờ.
+- Log lỗi nội bộ: `%LOCALAPPDATA%\OpenGuardKids\logs\tray.log`.
+
+Không có chế độ ẩn. Lỗi icon/UI dừng báo sẵn sàng và đóng IPC; Service phải dừng
+kiểm soát phiên khi lease hết hạn. Agent đã có Named Pipe server; khi chạy riêng
+Tray mà Agent chưa chạy, Tray hiển thị trạng thái chưa kết nối và thử lại. Chi tiết thông điệp, bảo mật
+và nghĩa vụ phía Service ở [hợp đồng IPC](../../docs/api/TRAY_IPC.md).
+
+Kiểm thử tự động bằng dữ liệu giả (không cần GUI):
+
+```powershell
+python -m unittest discover -s packages/interfaces/tests -v
+```
+
+Yêu cầu giao diện và minh bạch nằm trong [SRS](../../docs/architecture/SYSTEM_ARCHITECTURE_SRS.md).

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ogk-agent"
+version = "0.1.0"
+description = "OpenGuard Kids transparent Windows SYSTEM service and enforcement primitives"
+requires-python = ">=3.11"
+dependencies = [
+  "pywin32>=308,<400; sys_platform == 'win32'",
+  "psutil>=6,<8",
+  "dnslib>=0.9.26,<0.10",
+  "tzdata>=2025.1; sys_platform == 'win32'",
+  "pydantic>=2.7,<3",
+]
+
+[project.scripts]
+ogk-service = "ogk_agent.service.windows_service:main"
+
+[tool.setuptools.packages.find]
+where = ["src", "../contracts/src"]
+include = ["ogk_agent*", "ogk_contracts*"]
+namespaces = true

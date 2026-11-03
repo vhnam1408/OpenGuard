@@ -328,7 +328,7 @@ OpenGuardKids/                         # ten logic cua kho nguon
 `-- scripts/                           # build va ho tro dev/test
 ```
 
-Tên `OpenGuardKids/` ở sơ đồ là tên logic của kho; thư mục thực tế là **`E:\Mạng Máy Tính`**. Các README chỉ rõ ranh giới phân hệ; cây khởi tạo chưa bao gồm mã chạy hay bộ cài.
+Tên `OpenGuardKids/` ở sơ đồ là tên logic của kho; thư mục checkout có thể mang tên khác. Các README chỉ rõ ranh giới phân hệ; sơ đồ mô tả cấu trúc thiết kế, còn trạng thái mã nguồn và bộ cài hiện tại được ghi trong README gốc.
 
 ### 5.2. Nguyên tắc phụ thuộc và sở hữu
 

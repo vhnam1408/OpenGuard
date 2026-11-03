@@ -8,3 +8,5 @@ Package Python dự kiến: `ogk_contracts`. Chỉ chứa định nghĩa dữ li
 - `commands/`: command_id, phạm vi liên kết, hạn lệnh, ACK và trạng thái.
 
 A, B và C cùng sử dụng package này để tránh tự định nghĩa hợp đồng khác nhau. Chia sẻ schema không thay thế việc xác thực lại tại Server/Service.
+
+`sync.py` định nghĩa `CommandRequest`, `CommandAck`, `QueuedEvent`, `EventBatch` và `EventBatchAck`. Metadata đồng bộ nằm ngoài payload Event bảy trường. Xem [giao thức realtime/offline](../../docs/api/REALTIME_SYNC.md).

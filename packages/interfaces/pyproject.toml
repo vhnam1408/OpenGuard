@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ogk-interfaces"
+version = "0.1.0"
+description = "OpenGuard Kids User tray and web resources"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+tray = [
+  "pystray==0.19.5; sys_platform == 'win32'",
+  "Pillow>=11,<13; sys_platform == 'win32'",
+  "pywin32>=308,<400; sys_platform == 'win32'",
+]
+
+[project.gui-scripts]
+ogk-tray = "ogk_ui.tray.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src", "../contracts/src"]
+include = ["ogk_ui*", "ogk_contracts*"]
+namespaces = true
+
+[tool.setuptools.package-data]
+ogk_ui = ["web/templates/**/*.html", "web/static/**/*", "tray/assets/*"]
